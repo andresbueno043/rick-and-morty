@@ -13,8 +13,8 @@ function App() {
       <ThemeProvider>
         <div className="App">
           <Header />
-          <Characters />
           <Favorites />
+          <Characters />
         </div>
       </ThemeProvider>
     </CharacterProvider>
