@@ -1,5 +1,5 @@
 import { type } from "os";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 type ProviderProps = {
   children: React.ReactNode;
@@ -29,4 +29,6 @@ const ThemeProvider = ({ children }: ProviderProps) => {
   );
 };
 
-export { ThemeContext, ThemeProvider };
+const useThemeContext = () => useContext(ThemeContext);
+
+export { ThemeContext, ThemeProvider, useThemeContext };
