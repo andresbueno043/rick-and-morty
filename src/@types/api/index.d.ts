@@ -1,4 +1,4 @@
-export interface Character {
+interface Character {
   id: number,
   name: string,
   status: string,
@@ -17,4 +17,14 @@ export interface Character {
   episode: string[],
   url: string,
   created: Date
+}
+
+interface CharacterState {
+  favorites: Character[];
+  characters: Character[]
+}
+
+interface CharactersAction {
+  type: string;
+  payload?: any;
 }

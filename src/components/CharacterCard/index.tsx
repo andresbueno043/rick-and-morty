@@ -1,14 +1,25 @@
-import { Character } from "@/@types/api";
 import { useThemeContext } from "@/context/ThemeContext";
 import React, { useState } from "react";
+import { HeartIcon } from "@heroicons/react/24/outline";
+import { useCharacterContext } from "@/context/CharacterContext";
 
 type Props = {
   character: Character;
 };
 
 const CharacterCard = ({ character }: Props) => {
+  const { state, dispatch } = useCharacterContext();
   const { theme } = useThemeContext();
   const [open, setOpen] = useState(false);
+
+  const handleAddFavorite = () => {
+    dispatch({
+      type: "ADD_TO_FAVORITES",
+      payload: character,
+    });
+  };
+
+    
 
   return (
     <div
@@ -26,19 +37,48 @@ const CharacterCard = ({ character }: Props) => {
           alt={character.name}
         />
       </div>
-      <div className={`${open ? "w-[50%] flex-col" : "w-full  justify-center"} flex px-6 py-4 items-center`}>
-        <h2
-          className={`font-bold text-xl mb-2 ${
-            theme === "dark" ? "text-white" : "text-black"
-          }`}
-        >
-          {character.name}
-        </h2>
-        {open ? (<>
-          <h2><strong>Gender: </strong>{character.gender}</h2>
-          <h2><strong>Species: </strong>{character.species}</h2>
-          <h2><strong>Location: </strong>{character.location.name}</h2>
-        </>) : (<></>)}
+      <div
+        className={`${
+          open ? "w-[50%] flex-col" : "w-full  justify-center"
+        } flex px-6 py-4 items-center`}
+      >
+        <div className="flex flex-row justify-between items-center">
+          <h2
+            className={`font-bold text-xl mb-2 ${
+              theme === "dark" ? "text-white" : "text-black"
+            }`}
+          >
+            {character.name}
+          </h2>
+          <p
+            className="px-4 z-20"
+            onClick={(event) => {
+              event.stopPropagation();
+              handleAddFavorite();
+              console.log("Hola")
+            }}
+          >
+            <HeartIcon className="w-6 h-6" />
+          </p>
+        </div>
+        {open ? (
+          <>
+            <h2 className={theme === "dark" ? "text-white" : "text-black"}>
+              <strong>Gender: </strong>
+              {character.gender}
+            </h2>
+            <h2 className={theme === "dark" ? "text-white" : "text-black"}>
+              <strong>Species: </strong>
+              {character.species}
+            </h2>
+            <h2 className={theme === "dark" ? "text-white" : "text-black"}>
+              <strong>Location: </strong>
+              {character.location.name}
+            </h2>
+          </>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );
