@@ -1,25 +1,26 @@
 import { useThemeContext } from "@/context/ThemeContext";
 import React, { useState } from "react";
 import { HeartIcon } from "@heroicons/react/24/outline";
-import { useCharacterContext } from "@/context/CharacterContext";
+import { useFavorites } from "@/hooks/useFavorite";
 
 type Props = {
   character: Character;
 };
 
 const CharacterCard = ({ character }: Props) => {
-  const { state, dispatch } = useCharacterContext();
   const { theme } = useThemeContext();
+  const { favorites, addToFavorites, removeFromFavorites } = useFavorites();
   const [open, setOpen] = useState(false);
 
-  const handleAddFavorite = () => {
-    dispatch({
-      type: "ADD_TO_FAVORITES",
-      payload: character,
-    });
-  };
+  const isFavorite: boolean = favorites.some((favorite: Character) => favorite.id === character.id);
 
-    
+  const handleToggleFavorite = () => {
+    if (isFavorite) {
+      removeFromFavorites(character);
+    } else {
+      addToFavorites(character);
+    }
+  };
 
   return (
     <div
@@ -50,16 +51,21 @@ const CharacterCard = ({ character }: Props) => {
           >
             {character.name}
           </h2>
-          <p
+          <button
             className="px-4 z-20"
             onClick={(event) => {
               event.stopPropagation();
-              handleAddFavorite();
-              console.log("Hola")
+              handleToggleFavorite();
             }}
           >
-            <HeartIcon className="w-6 h-6" />
-          </p>
+            <HeartIcon
+              className={`w-6 h-6 ${
+                isFavorite
+                  ? "text-red-600 hover:text-red-500"
+                  : "text-gray-400 hover:text-red-500"
+              }`}
+            />
+          </button>
         </div>
         {open ? (
           <>

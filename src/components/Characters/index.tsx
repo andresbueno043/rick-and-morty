@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React, { BaseSyntheticEvent, useEffect, useState } from "react";
 import { CharacterCard } from "@/components/CharacterCard";
 import { useThemeContext } from "@/context/ThemeContext";
 import { useCharacterContext } from "@/context/CharacterContext";
@@ -15,10 +15,6 @@ const Characters = (props: Props) => {
       .then((response) => response.json())
       .then((data) => dispatch({ type: "SET_CHARACTERS", payload: data.results }));
   }, [dispatch]);
-
-  useEffect(() => {
-
-  }, []);
 
   return (
     <div className={`grid grid-cols-4 content-center grid-flow-row auto-rows-max gap-4 p-10 ${theme === "dark" ? "bg-gray-800" : "bg-gray-200"}`}>

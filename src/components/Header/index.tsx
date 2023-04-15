@@ -1,5 +1,6 @@
 import { ThemeContext, useThemeContext } from "@/context/ThemeContext";
 import React, { useContext } from "react";
+import SearchBar from "@/components/SearchBar";
 
 type Props = {};
 
@@ -15,6 +16,8 @@ const Header = (props: Props) => {
           <div className={`flex-shrink-0 font-bold text-xl ${theme === "dark" ? "text-white" : "text-slate-900"}`}>
             Rick and Morty
           </div>
+
+          <SearchBar />
 
           {/* Toggle button */}
           <button
