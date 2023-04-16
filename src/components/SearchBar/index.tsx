@@ -1,4 +1,4 @@
-import React, { BaseSyntheticEvent, useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { useCharacterContext } from "@/context/CharacterContext";
 import { useThemeContext } from "@/context/ThemeContext";
 
@@ -6,11 +6,12 @@ type Props = {};
 
 const SearchBar = (props: Props) => {
   const { state: characterState, dispatch } = useCharacterContext();
-  const [searchTerm, setSearchTerm] = useState("");
   const { theme } = useThemeContext();
+  const [searchTerm, setSearchTerm] = useState("");
+  const searchRef = useRef<HTMLInputElement>(null);
 
-  const handleSearch = (e: BaseSyntheticEvent) => {
-    const term = e.target.value;
+  const handleSearch = () => {
+    const term = searchRef.current?.value || "";
     setSearchTerm(term);
 
     if (term.trim() !== "") {
@@ -26,6 +27,10 @@ const SearchBar = (props: Props) => {
         );
     }
   };
+
+  useEffect(() => {
+    handleSearch();
+  }, []);
 
   return (
     <>
@@ -58,6 +63,7 @@ const SearchBar = (props: Props) => {
           }block w-full p-4 pl-10 text-sm rounded-lg   `}
           placeholder="Search"
           value={searchTerm}
+          ref={searchRef}
           onChange={handleSearch}
         />
       </div>
