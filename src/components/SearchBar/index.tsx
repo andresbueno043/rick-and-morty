@@ -1,36 +1,18 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
-import { useCharacterContext } from "@/context/CharacterContext";
+import React, { useRef } from "react";
+import { useCharacterSearch } from "@/hooks/useCharacterSearch";
 import { useThemeContext } from "@/context/ThemeContext";
 
 type Props = {};
 
 const SearchBar = (props: Props) => {
-  const { state: characterState, dispatch } = useCharacterContext();
+  const { searchTerm, setSearchTerm } = useCharacterSearch();
   const { theme } = useThemeContext();
-  const [searchTerm, setSearchTerm] = useState("");
   const searchRef = useRef<HTMLInputElement>(null);
 
   const handleSearch = () => {
     const term = searchRef.current?.value || "";
     setSearchTerm(term);
-
-    if (term.trim() !== "") {
-      const filteredCharacters = characterState.characters.filter((character) =>
-        character.name.toLowerCase().includes(term.toLowerCase())
-      );
-      dispatch({ type: "SET_CHARACTERS", payload: filteredCharacters });
-    } else {
-      fetch("https://rickandmortyapi.com/api/character")
-        .then((response) => response.json())
-        .then((data) =>
-          dispatch({ type: "SET_CHARACTERS", payload: data.results })
-        );
-    }
   };
-
-  useEffect(() => {
-    handleSearch();
-  }, []);
 
   return (
     <>
