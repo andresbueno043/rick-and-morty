@@ -12,7 +12,9 @@ const CharacterCard = ({ character }: Props) => {
   const { favorites, addToFavorites, removeFromFavorites } = useFavorites();
   const [open, setOpen] = useState(false);
 
-  const isFavorite: boolean = favorites.some((favorite: Character) => favorite.id === character.id);
+  const isFavorite: boolean = favorites.some(
+    (favorite: Character) => favorite.id === character.id
+  );
 
   const handleToggleFavorite = () => {
     if (isFavorite) {
@@ -26,46 +28,50 @@ const CharacterCard = ({ character }: Props) => {
     <div
       className={`${
         open ? "col-span-2 flex-row justify-between" : "col-span-1 flex-col"
-      } flex items-center w-full mx-auto rounded-lg overflow-hidden shadow-md text-center  ${
+      } flex items-center w-full mx-auto rounded-lg overflow-hidden shadow-md text-center ${
         theme === "dark" ? "bg-gray-700" : "bg-gray-300"
       }`}
       onClick={() => setOpen(!open)}
     >
-      <div className={open ? "w-[50%]" : "w-full"}>
+      <div className="h-80">
         <img
-          className="h-40 w-40 object-cover mx-auto mt-5"
+          className="h-full w-full object-fit-cover"
           src={character.image}
           alt={character.name}
         />
       </div>
-      <div
-        className={`${
-          open ? "w-[50%] flex-col" : "w-full  justify-center"
-        } flex px-6 py-4 items-center`}
-      >
-        <div className="flex flex-row justify-between items-center">
+      <div className="flex flex-row">
+        <div className="flex-grow my-auto">
           <h2
-            className={`font-bold text-xl mb-2 ${
+            className={`font-bold text-xl my-auto ${
               theme === "dark" ? "text-white" : "text-black"
             }`}
           >
             {character.name}
           </h2>
-          <button
-            className="px-4 z-20"
-            onClick={(event) => {
-              event.stopPropagation();
-              handleToggleFavorite();
-            }}
-          >
-            <HeartIcon
-              className={`w-6 h-6 ${
-                isFavorite
-                  ? "text-red-600 hover:text-red-500"
-                  : "text-gray-400 hover:text-red-500"
-              }`}
-            />
-          </button>
+        </div>
+        <div
+          className={`${
+            open ? "w-[50%] flex-col" : "w-full  justify-center"
+          } flex px-6 py-4 items-center w-1/6`}
+        >
+          <div className="flex flex-row justify-between items-center">
+            <button
+              className="px-4 z-20"
+              onClick={(event) => {
+                event.stopPropagation();
+                handleToggleFavorite();
+              }}
+            >
+              <HeartIcon
+                className={`w-10 h-10 ${
+                  isFavorite
+                    ? "text-red-600 hover:text-red-500"
+                    : "text-gray-400 hover:text-red-500"
+                }`}
+              />
+            </button>
+          </div>
         </div>
         {open ? (
           <>
