@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/rick-and-morty/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + React + TS</title>
+    <script>
+      if (
+        localStorage.getItem("color-theme") === "dark" ||
+        (!("color-theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
+    <script type="module" crossorigin src="/rick-and-morty/assets/index-ecc763be.js"></script>
+    <link rel="stylesheet" href="/rick-and-morty/assets/index-25c67267.css">
+  </head>
+  <body>
+    <div id="root" class="dark"></div>
+    
+    <script src="../path/to/flowbite/dist/flowbite.bundle.js"></script>
+  </body>
+</html>
